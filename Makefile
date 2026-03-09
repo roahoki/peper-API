@@ -4,8 +4,10 @@ UVICORN := .venv/bin/uvicorn
 RUFF    := .venv/bin/ruff
 CZ      := .venv/bin/cz
 
+NGROK    := ngrok
+
 # ─── Phony targets ────────────────────────────────────────────────────────────
-.PHONY: help install install-dev dev lint fix format check commit bump changelog clean
+.PHONY: help install install-dev dev tunnel webhook-info lint fix format check commit bump changelog clean
 
 # Default target
 help:
@@ -17,7 +19,9 @@ help:
 	@echo "    install-dev    Install dev/tooling dependencies into .venv"
 	@echo ""
 	@echo "  Development"
-	@echo "    dev            Run the FastAPI server with hot-reload"
+	@echo "    dev            Run the FastAPI server locally with hot-reload"
+	@echo "    tunnel         Start uvicorn + ngrok and auto-register Telegram webhook"
+	@echo "    webhook-info   Show the currently registered Telegram webhook"
 	@echo ""
 	@echo "  Quality"
 	@echo "    lint           Check code with ruff (no changes)"
@@ -46,6 +50,13 @@ install-dev: install
 # ─── Development ──────────────────────────────────────────────────────────────
 dev:
 	$(UVICORN) src.main:app --reload --host 0.0.0.0 --port 8000
+
+tunnel:
+	@chmod +x scripts/tunnel.sh
+	@bash scripts/tunnel.sh
+
+webhook-info:
+	@source .env && curl -s "https://api.telegram.org/bot$${TELEGRAM_BOT_TOKEN}/getWebhookInfo" | python3 -m json.tool
 
 # ─── Quality ──────────────────────────────────────────────────────────────────
 lint:

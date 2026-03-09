@@ -1,0 +1,43 @@
+# business.yaml — Peper operational configuration
+#
+# This file is the source of truth for Phase 2 (local dev).
+# In Phase 3 it will be replaced by reading the "Config" tab in Google Sheets,
+# so the owner can update categories, vehicles, and workers without touching code.
+
+categories:
+  - COMBUSTIBLE      # Petróleo / diesel for trucks
+  - BENCINA          # Gasoline (Vero's car, other vehicles)
+  - REPARACION       # Mechanic, vulcanization
+  - REPUESTOS        # Tires, air hoses, flex hoses, light bulbs, hardware
+  - SUELDOS          # Fixed and daily wages
+  - PREVIRED         # AFP, Fonasa social contributions
+  - GPS              # GPS service subscription for trucks
+  - IVA              # VAT (depends on sales and purchases)
+  - ARRIENDO         # Trailer rentals and other leases
+  - ALIMENTACION     # Confitería Rorro, meals, drinks
+  - CELULARES        # Mobile phone bills (Edwin, Vero)
+  - TAG              # Toll tags (trucks, Tomi's car, BMW)
+  - CONTADOR         # Accountant fees
+  - CREDITO          # Bank loan installments (Banco Estado)
+  - EXTRAS           # Tips, small incidentals, miscellaneous
+
+vehicles:
+  - FFFZ87           # Truck
+  - XR               # Truck
+  - Hyundai          # Truck
+  - Volvo            # Truck
+  - Rampla 1         # Semi-trailer
+  - Rampla 2         # Semi-trailer
+  - Auto Tomi        # Owner's car
+  - BMW              # Owner's car
+
+workers:
+  - Edwin
+  - Matos
+  - Mario
+  - Cesar
+  - Lukas
+  - Bastian
+  - Jose
+  - Nixson
+  - Manuel
