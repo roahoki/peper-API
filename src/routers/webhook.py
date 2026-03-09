@@ -7,7 +7,7 @@ from src.models.expense import (
     ExpenseRecord,
     RecordExpenseAction,
 )
-from src.services import claude_service, telegram_service, whisper_service
+from src.services import claude_service, sheets_service, telegram_service, whisper_service
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -124,7 +124,15 @@ async def telegram_webhook(request: Request):
         if _is_confirmation(text):
             del _pending_expenses[chat_id]
             logger.info("Expense confirmed by user: %s", pending)
-            # Phase 3: write to Google Sheets here
+            try:
+                await sheets_service.append_expense(pending)
+            except Exception:
+                logger.exception("Failed to write to Google Sheets")
+                await telegram_service.send_message(
+                    chat_id,
+                    "❌ El gasto fue confirmado pero no pude escribirlo en Sheets. Revisa los logs.",
+                )
+                return {"ok": True}
             await telegram_service.send_message(chat_id, _format_recorded(pending))
             return {"ok": True}
         if _is_cancellation(text):

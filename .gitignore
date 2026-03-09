@@ -212,6 +212,8 @@ telegram_config.json
 google_credentials.json
 google_service_account.json
 sheets_credentials.json
+oauth_client.json
+sheets_token.json
 
 # LLM Model files and caches
 models/
