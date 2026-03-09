@@ -32,7 +32,9 @@ async def download_file(file_id: str) -> bytes:
     """Download a file from Telegram CDN and return its raw bytes."""
     async with httpx.AsyncClient() as client:
         # Step 1: resolve file_id → file_path
-        resp = await client.get(_bot_url("getFile"), params={"file_id": file_id}, timeout=10)
+        resp = await client.get(
+            _bot_url("getFile"), params={"file_id": file_id}, timeout=10
+        )
         resp.raise_for_status()
         file_path = resp.json()["result"]["file_path"]
 

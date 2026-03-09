@@ -2,7 +2,11 @@ import logging
 
 from fastapi import APIRouter, Request
 
-from src.models.expense import AskClarificationAction, ExpenseRecord, RecordExpenseAction
+from src.models.expense import (
+    AskClarificationAction,
+    ExpenseRecord,
+    RecordExpenseAction,
+)
 from src.services import claude_service, telegram_service, whisper_service
 
 router = APIRouter()
@@ -11,7 +15,17 @@ logger = logging.getLogger(__name__)
 # In-memory store for expenses awaiting user confirmation, keyed by chat_id.
 _pending_expenses: dict[int, ExpenseRecord] = {}
 
-_CONFIRM_WORDS = {"si", "sí", "confirmo", "yes", "dale", "ok", "bueno", "correcto", "✅"}
+_CONFIRM_WORDS = {
+    "si",
+    "sí",
+    "confirmo",
+    "yes",
+    "dale",
+    "ok",
+    "bueno",
+    "correcto",
+    "✅",
+}
 _CANCEL_WORDS = {"no", "nop", "nope", "cancelar", "cancel", "descartar", "❌"}
 
 
